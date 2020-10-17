@@ -8,11 +8,11 @@
 import Foundation
 
 struct Car {
-    var manufacturer: String
-    var model: String
-    var body: Body
-    var yearOfIssue: Int?
-    var carNumber: String?
+    let manufacturer: String
+    let model: String
+    let body: Body
+    let yearOfIssue: Int?
+    let carNumber: String?
 }
 
 enum Body:String, CaseIterable {
