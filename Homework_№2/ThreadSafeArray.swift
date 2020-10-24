@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ThreadSafeArray<Element: Equatable> {
+final class ThreadSafeArray<Element: Equatable> {
     let safeQueue = DispatchQueue(label: "com.Lumko.Homework--2.safeQueue"
                                   , attributes: .concurrent)
     private var threadSafeArray:[Element] = []
