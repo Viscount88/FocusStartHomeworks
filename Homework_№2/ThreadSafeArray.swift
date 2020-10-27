@@ -7,44 +7,59 @@
 
 import Foundation
 
-final class ThreadSafeArray<Element: Equatable> {
-    let safeQueue = DispatchQueue(label: "com.Lumko.Homework--2.safeQueue"
-                                  , attributes: .concurrent)
-    private var threadSafeArray:[Element] = []
+final class ThreadSafeArray<Element> {
+    private let safeQueue = DispatchQueue(label: "com.Lumko.Homework--2.safeQueue",
+                                          attributes: .concurrent)
+    private var array:[Element] = []
 
     var count: Int {
         safeQueue.sync {
-            return threadSafeArray.count
+            return array.count
         }
     }
 
     var description: String {
         safeQueue.sync {
-            return self.threadSafeArray.description
+            return self.array.description
         }
     }
 
     var isEmpty: Bool {
-        return threadSafeArray.isEmpty
+        safeQueue.sync {
+            return self.array.isEmpty
+        }
     }
 
     func append(_ item: Element){
         safeQueue.async(flags: .barrier) {
-            self.threadSafeArray.append(item)
+            self.array.append(item)
         }
     }
 
     func remove(at index: Int) {
         safeQueue.async(flags: .barrier) {
-            self.threadSafeArray.remove(at: index)
+            self.array.remove(at: index)
         }
     }
 
     subscript(index: Int) -> Element {
-        return threadSafeArray[index]
+        get {
+            safeQueue.sync {
+                return self.array[index]
+            }
+        }
+        set {
+            safeQueue.sync(flags: .barrier) {
+                self.array[index]
+            }
+        }
     }
+}
 
+extension ThreadSafeArray where Element: Equatable {
     func contains(_ element: Element) -> Bool {
-        return threadSafeArray.contains(element)
+        safeQueue.sync {
+            return self.array.contains(element)
+        }
     }
 }
