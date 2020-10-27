@@ -42,10 +42,10 @@ final class ThreadSafeArray<Element> {
         }
     }
 
-    subscript(index: Int) -> Element {
+    subscript(index: Int) -> Element? {
         get {
-            safeQueue.sync {
-                return self.array[index]
+            return safeQueue.sync {
+                self.array[index]
             }
         }
         set {
