@@ -7,6 +7,31 @@
 
 import UIKit
 
+//let stackView = UIStackView()
+//self.scrollView.addSubview(self.stackView)
+//self.stackView.translatesAutoresizingMaskIntoConstraints = false
+//self.stackView.axis = .vertical
+//self.stackView.spacing = 10;
+//
+////constrain stack view to scroll view
+//self.stackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true;
+//self.stackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor).isActive = true;
+//self.stackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor).isActive = true;
+//self.stackView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor).isActive = true;
+//
+////constrain width of stack view to width of self.view, NOT scroll view
+//self.stackView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true;
+//
+////add image views to stack view
+//let kittenImageView1 = UIImageView(image: Constants.capeCodImage)
+//self.stackView.addArrangedSubview(kittenImageView1)
+//
+//let kittenImageView2 = UIImageView(image: Constants.capeCodImage)
+//self.stackView.addArrangedSubview(kittenImageView2)
+//
+//let kittenImageView3 = UIImageView(image: Constants.capeCodImage)
+//self.stackView.addArrangedSubview(kittenImageView3)
+
 class FirstView: UIView {
 
     private enum Constants {
