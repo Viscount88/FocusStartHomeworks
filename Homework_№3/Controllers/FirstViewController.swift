@@ -9,10 +9,11 @@ import UIKit
 
 class FirstViewController: UIViewController {
 
+    let firstView = FirstView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.blue
-        self.title = "Tab 1"
+        self.view = firstView
     }
 }
 

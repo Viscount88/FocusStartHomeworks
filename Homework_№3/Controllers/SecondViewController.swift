@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SecondViewController.swift
 //  Homework_№3
 //
 //  Created by Андрей Шамин on 10/30/20.
@@ -7,12 +7,12 @@
 
 import UIKit
 
-class FirstViewController: UIViewController {
+class SecondViewController: UIViewController {
+
+    let secondView = SecondView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.blue
-        self.title = "Tab 1"
+        self.view = secondView
     }
 }
-
