@@ -11,8 +11,7 @@ class ThirdViewController: UIViewController {
 
     let thirdView = ThirdView()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
         self.view = thirdView
     }
 }

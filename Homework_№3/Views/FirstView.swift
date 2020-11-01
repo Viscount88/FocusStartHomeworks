@@ -7,32 +7,9 @@
 
 import UIKit
 
-//let stackView = UIStackView()
-//self.scrollView.addSubview(self.stackView)
-//self.stackView.translatesAutoresizingMaskIntoConstraints = false
-//self.stackView.axis = .vertical
-//self.stackView.spacing = 10;
-//
-////constrain stack view to scroll view
-//self.stackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true;
-//self.stackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor).isActive = true;
-//self.stackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor).isActive = true;
-//self.stackView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor).isActive = true;
-//
-////constrain width of stack view to width of self.view, NOT scroll view
-//self.stackView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true;
-//
-////add image views to stack view
-//let kittenImageView1 = UIImageView(image: Constants.capeCodImage)
-//self.stackView.addArrangedSubview(kittenImageView1)
-//
-//let kittenImageView2 = UIImageView(image: Constants.capeCodImage)
-//self.stackView.addArrangedSubview(kittenImageView2)
-//
-//let kittenImageView3 = UIImageView(image: Constants.capeCodImage)
-//self.stackView.addArrangedSubview(kittenImageView3)
+final class FirstView: UIView {
 
-class FirstView: UIView {
+    // MARK: - Constants
 
     private enum Constants {
         static let firstLabelFont = UIFont.systemFont(ofSize: 14)
@@ -40,142 +17,175 @@ class FirstView: UIView {
         static let thirdLabelFont = UIFont(name: "HoeflerText-BlackItalic", size: 20)
         static let firstButtonDiameter:CGFloat = 80
         static let capeCodImage = UIImage(named: "capeCodImage")
+        static let screenHeight = UIScreen.main.bounds.height
+        static let screenWidth = UIScreen.main.bounds.width
+        static let anchorConstant:CGFloat = 16
+        static let stackViewSpacing:CGFloat = 16
+        static let labelLineSpace:CGFloat = 20
     }
 
-    var firstLabel = UILabel()
-    var secondLabel = UILabel()
-    var thirdLabel = UILabel()
-    var firstButton = UIButton()
-    var secondButton = UIButton()
-    var imageView = UIImageView()
+    // MARK: - Properties
+
+    var firstLabel: UILabel = {
+        let firstLabel = UILabel()
+        firstLabel.text  = "Перый Label"
+        firstLabel.textAlignment = .center
+        firstLabel.font = Constants.firstLabelFont
+        return firstLabel
+    }()
+
+    var secondLabel: UILabel = {
+        let secondLabel = UILabel()
+        secondLabel.text  = "Второй Label"
+        secondLabel.textAlignment = .center
+        secondLabel.font = Constants.secondLabelFont
+        return secondLabel
+    }()
+
+    var thirdLabel: UILabel = {
+        let thirdLabel = UILabel()
+        thirdLabel.text  = "Третий Label\nТретий Label"
+        thirdLabel.textAlignment = .center
+        thirdLabel.numberOfLines = 2
+        thirdLabel.font = Constants.thirdLabelFont
+        return thirdLabel
+    }()
+
+    var firstButton: UIButton = {
+        let firstButton = UIButton()
+        firstButton.backgroundColor = .black
+        firstButton.setTitle("Кнопка", for: .normal)
+        firstButton.setTitleColor(.white, for: .normal)
+        firstButton.addTarget(self, action: #selector(firstButtonTapped), for: .touchUpInside)
+        return firstButton
+    }()
+
+    var secondButton: UIButton = {
+        let secondButton = UIButton()
+        secondButton.layer.cornerRadius = 8
+        secondButton.backgroundColor = .black
+        secondButton.setTitle("Вторая кнопка", for: .normal)
+        secondButton.setTitleColor(.white, for: .normal)
+        secondButton.addTarget(self, action: #selector(secondButtonTapped), for: .touchUpInside)
+        return secondButton
+    }()
+
+    var imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = Constants.capeCodImage
+        return imageView
+    }()
+    let stackView   = UIStackView()
+    let activityIndicator = UIActivityIndicatorView()
+
+    // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .red
         setupElements()
     }
 
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
 
-    private func setupElements() {
-        self.backgroundColor = .white
+private extension FirstView {
+    func setupElements() {
+        self.backgroundColor = .systemBackground
+        setupImage()
+        setupActivityIndicator()
         setupLabels()
         setupButtons()
-        setupImage()
+        setupStackView()
     }
-
-    private func setupLabels() {
+    
+    func setupImage() {
+        self.addSubview(imageView)
+        // Layout
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            imageView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -Constants.anchorConstant/2),
+            imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constants.anchorConstant),
+            imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constants.anchorConstant),
+            imageView.heightAnchor.constraint(equalToConstant: Constants.screenHeight/3),
+        ])
+    }
+    
+    func setupActivityIndicator() {
+        activityIndicator.color = .black
+        activityIndicator.startAnimating()
+        self.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicator.centerYAnchor.constraint(equalTo: self.imageView.centerYAnchor),
+            activityIndicator.centerXAnchor.constraint(equalTo: self.imageView.centerXAnchor),
+        ])
+    }
+    
+    func setupLabels() {
         setupFirstLabel()
         setupSecondLabel()
         setupThirdLabel()
     }
-
-    private func setupButtons() {
+    
+    func setupButtons() {
         setupFirstButton()
         setupSecondButton()
     }
-
-    fileprivate func setupFirstLabel() {
-        // Первый Label создал не из метода setupLabel потому что здесь пришлось бы делать менять метод setupLabel
-        firstLabel.text = "Первый Label"
-        firstLabel.font = Constants.firstLabelFont
-        firstLabel.textAlignment = .center
-        self.addSubview(firstLabel)
-        // Layout
-        firstLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            firstLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 8),
-            firstLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
-            firstLabel.widthAnchor.constraint(equalToConstant: 250),
-            firstLabel.heightAnchor.constraint(equalToConstant: 20),
-        ])
+    
+    func setupFirstLabel() {
+        firstLabel.widthAnchor.constraint(equalToConstant: Constants.screenWidth*0.85).isActive = true
+        firstLabel.heightAnchor.constraint(equalToConstant: Constants.labelLineSpace).isActive = true
     }
-
-    fileprivate func setupSecondLabel() {
-        setupLabel(secondLabel, withText: "Второй Label", font: Constants.secondLabelFont, topItem: self.firstLabel)
+    
+    func setupSecondLabel() {
+        secondLabel.widthAnchor.constraint(equalToConstant: Constants.screenWidth*0.85).isActive = true
+        secondLabel.heightAnchor.constraint(equalToConstant: Constants.labelLineSpace).isActive = true
     }
-
-    fileprivate func setupThirdLabel() {
-        setupLabel(thirdLabel, withText: "Третий Label\nТретий Label", font: Constants.thirdLabelFont, numberOfLines: 2, topItem: self.secondLabel)
+    
+    func setupThirdLabel() {
+        thirdLabel.widthAnchor.constraint(equalToConstant: Constants.screenWidth*0.85).isActive = true
+        thirdLabel.heightAnchor.constraint(equalToConstant: Constants.labelLineSpace*2).isActive = true
     }
-
+    
     func setupFirstButton() {
-        self.firstButton.layer.cornerRadius = Constants.firstButtonDiameter/2
-        self.firstButton.backgroundColor = .black
-        self.firstButton.setTitle("Кнопка", for: .normal)
-        self.firstButton.setTitleColor(.white, for: .normal)
-        self.firstButton.addTarget(self, action: #selector(firstButtonTapped), for: .touchUpInside)
-        self.addSubview(firstButton)
-        // Layout
-        self.firstButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.firstButton.topAnchor.constraint(greaterThanOrEqualTo: self.thirdLabel.bottomAnchor, constant: 15),
-            self.firstButton.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
-            self.firstButton.widthAnchor.constraint(equalToConstant: Constants.firstButtonDiameter),
-            self.firstButton.heightAnchor.constraint(equalToConstant: Constants.firstButtonDiameter),
-        ])
+        firstButton.widthAnchor.constraint(equalToConstant: Constants.firstButtonDiameter).isActive = true
+        firstButton.heightAnchor.constraint(equalToConstant: Constants.firstButtonDiameter).isActive = true
+        firstButton.layer.cornerRadius = Constants.firstButtonDiameter/2
     }
-
+    
     @objc func firstButtonTapped() {
         print("Была нажата круглая кнопка")
     }
-
+    
     func setupSecondButton() {
-        self.secondButton.layer.cornerRadius = 8
-        self.secondButton.backgroundColor = .black
-        self.secondButton.setTitle("Вторая кнопка", for: .normal)
-        self.secondButton.setTitleColor(.white, for: .normal)
-        self.secondButton.addTarget(self, action: #selector(secondButtonTapped), for: .touchUpInside)
-        self.addSubview(secondButton)
-        // Layout
-        self.secondButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.secondButton.topAnchor.constraint(greaterThanOrEqualTo: self.firstButton.bottomAnchor, constant: 10),
-            self.secondButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            self.secondButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            self.secondButton.heightAnchor.constraint(equalToConstant: 40),
-        ])
+        secondButton.widthAnchor.constraint(equalToConstant: Constants.screenWidth*0.85).isActive = true
+        secondButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
-
+    
     @objc func secondButtonTapped() {
         print("Была нажата вторая кнопка")
     }
-
-    fileprivate func setupImage() {
-        let screenBounds = UIScreen.main.bounds
-        let screenHeight = screenBounds.height
-        self.imageView.image = Constants.capeCodImage
-        self.addSubview(imageView)
-        // Layout
-        self.imageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.imageView.topAnchor.constraint(greaterThanOrEqualTo: self.secondButton.bottomAnchor, constant: 20),
-            self.imageView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -8),
-            self.imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            self.imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            self.imageView.heightAnchor.constraint(equalToConstant: screenHeight/3),
-        ])
-    }
-
-    fileprivate func setupLabel(_ label:UILabel ,withText text:String,font: UIFont?,numberOfLines:Int = 1, topItem: UIView) {
-        label.text = text
-        label.font = font
-        label.textAlignment = .center
-        label.numberOfLines = numberOfLines
-        self.addSubview(label)
-        // Layout
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: topItem.bottomAnchor, constant: 6),
-            label.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
-            label.widthAnchor.constraint(equalToConstant: 250),
-            label.heightAnchor.constraint(greaterThanOrEqualToConstant: 40)
-        ])
+    
+    func setupStackView() {
+        stackView.axis = NSLayoutConstraint.Axis.vertical
+        stackView.distribution = UIStackView.Distribution.equalSpacing
+        stackView.alignment = UIStackView.Alignment.center
+        stackView.spacing = Constants.stackViewSpacing
         
+        stackView.addArrangedSubview(firstLabel)
+        stackView.addArrangedSubview(secondLabel)
+        stackView.addArrangedSubview(thirdLabel)
+        stackView.addArrangedSubview(firstButton)
+        stackView.addArrangedSubview(secondButton)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.addSubview(stackView)
+        
+        //Constraints
+        stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        stackView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: Constants.anchorConstant/2).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: self.imageView.topAnchor, constant: -Constants.anchorConstant/2).isActive = true
     }
-
-
 }

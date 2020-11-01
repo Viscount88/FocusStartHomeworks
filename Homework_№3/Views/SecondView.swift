@@ -7,12 +7,18 @@
 
 import UIKit
 
-class SecondView: UIView {
+final class SecondView: UIView {
+
+    // MARK: - Constants
 
     private enum Constants {
         static let capeCodImage = UIImage(named: "capeCodImage")
-        static let anchorConstant:CGFloat = 20
+        static let anchorConstant:CGFloat = 16
+        static let horizontalOrientationImageSize:CGSize = CGSize(width: 125, height: 125)
+        static let labelHeight:CGFloat = 30
     }
+
+    // MARK: - Properties
 
     let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -44,32 +50,48 @@ class SecondView: UIView {
         return v
     }()
 
-    var verticalConstraints: [NSLayoutConstraint] = []
-    var horizontalConstraints: [NSLayoutConstraint] = []
+    private var verticalConstraints: [NSLayoutConstraint] = []
+    private var horizontalConstraints: [NSLayoutConstraint] = []
 
+    // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = .systemBackground
         setupElements()
     }
-    
 
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    fileprivate func setupVerticalConstraints() {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        activateCurrentConstraints()
+    }
+}
+
+private extension SecondView {
+    func setupElements() {
+        self.addSubview(scrollView)
+        setupVerticalConstraints()
+        setupHorizontalConstraints()
+        setupScrollView()
+        addSubviewsToScrollView()
+        activateCurrentConstraints()
+    }
+
+    func setupVerticalConstraints() {
         verticalConstraints = [
-            imageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 0),
+            imageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             imageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: Constants.anchorConstant),
-            imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
+            imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             imageView.heightAnchor.constraint(equalToConstant: 250),
 
-            mainLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 0),
+            mainLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             mainLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: Constants.anchorConstant),
-            mainLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
-            mainLabel.heightAnchor.constraint(equalToConstant: 30),
+            mainLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            mainLabel.heightAnchor.constraint(equalToConstant: Constants.labelHeight),
 
             textLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: Constants.anchorConstant),
             textLabel.topAnchor.constraint(equalTo: mainLabel.bottomAnchor, constant: Constants.anchorConstant),
@@ -78,48 +100,39 @@ class SecondView: UIView {
         ]
     }
 
-    fileprivate func setupHorizontalConstraints() {
+    func setupHorizontalConstraints() {
         horizontalConstraints = [
-            imageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: Constants.anchorConstant),
+            imageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 2*Constants.anchorConstant),
             imageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: Constants.anchorConstant),
-            imageView.widthAnchor.constraint(equalToConstant: 125),
-            imageView.heightAnchor.constraint(equalToConstant: 125),
+            imageView.widthAnchor.constraint(equalToConstant: Constants.horizontalOrientationImageSize.width),
+            imageView.heightAnchor.constraint(equalToConstant: Constants.horizontalOrientationImageSize.height),
 
-            mainLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 0),
-            mainLabel.centerYAnchor.constraint(equalTo: imageView.centerYAnchor, constant: 0),
-            mainLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
-            mainLabel.heightAnchor.constraint(equalToConstant: 30),
+            mainLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor),
+            mainLabel.centerYAnchor.constraint(equalTo: imageView.centerYAnchor),
+            mainLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            mainLabel.heightAnchor.constraint(equalToConstant: Constants.labelHeight),
 
-            textLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: Constants.anchorConstant),
+            textLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 2*Constants.anchorConstant),
             textLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: Constants.anchorConstant),
             textLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constants.anchorConstant),
             textLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -Constants.anchorConstant)
         ]
     }
 
-    fileprivate func setupScrollViewConstraints() {
-        scrollView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
-        scrollView.topAnchor.constraint(equalTo: self.topAnchor, constant: 8.0).isActive = true
-        scrollView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8.0).isActive = true
+    func setupScrollView() {
+        scrollView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: self.topAnchor, constant: Constants.anchorConstant/2).isActive = true
+        scrollView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Constants.anchorConstant/2).isActive = true
     }
 
-    fileprivate func addSubviewsToScrollView() {
+    func addSubviewsToScrollView() {
         scrollView.addSubview(imageView)
         scrollView.addSubview(mainLabel)
         scrollView.addSubview(textLabel)
     }
 
-    private func setupElements() {
-        self.addSubview(scrollView)
-        setupVerticalConstraints()
-        setupHorizontalConstraints()
-        setupScrollViewConstraints()
-        addSubviewsToScrollView()
-        activateCurrentConstraints()
-    }
-
-    private func activateCurrentConstraints() {
+    func activateCurrentConstraints() {
         NSLayoutConstraint.deactivate(self.verticalConstraints + self.horizontalConstraints)
         if self.traitCollection.verticalSizeClass == .regular {
             NSLayoutConstraint.activate(self.verticalConstraints)
@@ -127,10 +140,4 @@ class SecondView: UIView {
             NSLayoutConstraint.activate(self.horizontalConstraints)
         }
     }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        self.activateCurrentConstraints()
-    }
-
 }
