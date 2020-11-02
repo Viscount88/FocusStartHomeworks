@@ -16,7 +16,7 @@ final class ThirdView: UIView {
         static let anchorConstant:CGFloat = 16
     }
 
-    // MARK: - Properties
+    // MARK: - Views
 
     let loginTextField: UITextField = {
         let textField = UITextField()
@@ -45,7 +45,9 @@ final class ThirdView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+
+    // MARK: - Properties
+
     private var isKeyboardShowing = false
     private var doneButtonBottomAnchor:NSLayoutConstraint!
     private var doneButtonBottomAnchorWithKeyboard:NSLayoutConstraint!
@@ -63,6 +65,8 @@ final class ThirdView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+// MARK: - Установка constraint-ов для элементов
 
 private extension ThirdView {
     func setupElements() {
@@ -158,24 +162,37 @@ private extension ThirdView {
     }
 }
 
+// MARK: - UITextFieldDelegate: действия для return от UITextField-ов
+
 extension ThirdView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == loginTextField {
-            passwordTextField.becomeFirstResponder()
-            loginTextField.resignFirstResponder()
+            textFieldShouldReturnForLoginTF()
         } else if textField == passwordTextField {
-            passwordTextField.resignFirstResponder()
-            if let login = loginTextField.text, let password = passwordTextField.text  {
-                if login != "", password != "" {
-                    print("Дальнейшее выполнение с логином \(login) и паролем \(password)")
-                } else if login == "" {
-                    print("Надо ввести логин")
-                } else if password == "" {
-                    print("Надо ввести пароль")
-                }
-            }
+            textFieldShouldReturnForPasswordTF()
         }
         return true
     }
-}
 
+    fileprivate func textFieldShouldReturnForLoginTF() {
+        passwordTextField.becomeFirstResponder()
+        loginTextField.resignFirstResponder()
+    }
+
+    fileprivate func textFieldShouldReturnForPasswordTF() {
+        passwordTextField.resignFirstResponder()
+        if let login = loginTextField.text, let password = passwordTextField.text  {
+            checkingLoginAndPasswordTextField(login, password)
+        }
+    }
+
+    fileprivate func checkingLoginAndPasswordTextField(_ login: String, _ password: String) {
+        if !login.isEmpty , !password.isEmpty {
+            print("Дальнейшее выполнение с логином \(login) и паролем \(password)")
+        } else if login.isEmpty {
+            print("Надо ввести логин")
+        } else if password.isEmpty {
+            print("Надо ввести пароль")
+        }
+    }
+}

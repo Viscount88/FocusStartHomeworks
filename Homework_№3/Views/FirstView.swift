@@ -10,11 +10,13 @@ import UIKit
 final class FirstView: UIView {
 
     // MARK: - Constants
-
-    private enum Constants {
+    private enum Fonts {
         static let firstLabelFont = UIFont.systemFont(ofSize: 14)
         static let secondLabelFont = UIFont(name: "Georgia", size: 18)
         static let thirdLabelFont = UIFont(name: "HoeflerText-BlackItalic", size: 20)
+    }
+
+    private enum Constants {
         static let firstButtonDiameter:CGFloat = 80
         static let capeCodImage = UIImage(named: "capeCodImage")
         static let screenHeight = UIScreen.main.bounds.height
@@ -22,15 +24,22 @@ final class FirstView: UIView {
         static let anchorConstant:CGFloat = 16
         static let stackViewSpacing:CGFloat = 16
         static let labelLineSpace:CGFloat = 20
+        static let widthOfItems:CGFloat = screenWidth*0.85
+        static let seconButtonHeight:CGFloat = 40
     }
 
     // MARK: - Properties
+
+    let stackView   = UIStackView()
+    let activityIndicator = UIActivityIndicatorView()
+
+    // MARK: - Views
 
     var firstLabel: UILabel = {
         let firstLabel = UILabel()
         firstLabel.text  = "Перый Label"
         firstLabel.textAlignment = .center
-        firstLabel.font = Constants.firstLabelFont
+        firstLabel.font = Fonts.firstLabelFont
         return firstLabel
     }()
 
@@ -38,7 +47,7 @@ final class FirstView: UIView {
         let secondLabel = UILabel()
         secondLabel.text  = "Второй Label"
         secondLabel.textAlignment = .center
-        secondLabel.font = Constants.secondLabelFont
+        secondLabel.font = Fonts.secondLabelFont
         return secondLabel
     }()
 
@@ -47,7 +56,7 @@ final class FirstView: UIView {
         thirdLabel.text  = "Третий Label\nТретий Label"
         thirdLabel.textAlignment = .center
         thirdLabel.numberOfLines = 2
-        thirdLabel.font = Constants.thirdLabelFont
+        thirdLabel.font = Fonts.thirdLabelFont
         return thirdLabel
     }()
 
@@ -75,8 +84,6 @@ final class FirstView: UIView {
         imageView.image = Constants.capeCodImage
         return imageView
     }()
-    let stackView   = UIStackView()
-    let activityIndicator = UIActivityIndicatorView()
 
     // MARK: - Init
 
@@ -89,6 +96,8 @@ final class FirstView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+// MARK: - Установка constraint-ов для элементов
 
 private extension FirstView {
     func setupElements() {
@@ -135,17 +144,17 @@ private extension FirstView {
     }
     
     func setupFirstLabel() {
-        firstLabel.widthAnchor.constraint(equalToConstant: Constants.screenWidth*0.85).isActive = true
+        firstLabel.widthAnchor.constraint(equalToConstant: Constants.widthOfItems).isActive = true
         firstLabel.heightAnchor.constraint(equalToConstant: Constants.labelLineSpace).isActive = true
     }
     
     func setupSecondLabel() {
-        secondLabel.widthAnchor.constraint(equalToConstant: Constants.screenWidth*0.85).isActive = true
+        secondLabel.widthAnchor.constraint(equalToConstant: Constants.widthOfItems).isActive = true
         secondLabel.heightAnchor.constraint(equalToConstant: Constants.labelLineSpace).isActive = true
     }
     
     func setupThirdLabel() {
-        thirdLabel.widthAnchor.constraint(equalToConstant: Constants.screenWidth*0.85).isActive = true
+        thirdLabel.widthAnchor.constraint(equalToConstant: Constants.widthOfItems).isActive = true
         thirdLabel.heightAnchor.constraint(equalToConstant: Constants.labelLineSpace*2).isActive = true
     }
     
@@ -160,8 +169,8 @@ private extension FirstView {
     }
     
     func setupSecondButton() {
-        secondButton.widthAnchor.constraint(equalToConstant: Constants.screenWidth*0.85).isActive = true
-        secondButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        secondButton.widthAnchor.constraint(equalToConstant: Constants.widthOfItems).isActive = true
+        secondButton.heightAnchor.constraint(equalToConstant: Constants.seconButtonHeight).isActive = true
     }
     
     @objc func secondButtonTapped() {

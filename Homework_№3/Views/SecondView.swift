@@ -18,7 +18,7 @@ final class SecondView: UIView {
         static let labelHeight:CGFloat = 30
     }
 
-    // MARK: - Properties
+    // MARK: - Views
 
     let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -50,8 +50,11 @@ final class SecondView: UIView {
         return v
     }()
 
+    // MARK: - Properties
+
     private var verticalConstraints: [NSLayoutConstraint] = []
     private var horizontalConstraints: [NSLayoutConstraint] = []
+    private var previousTraitCollection: UITraitCollection?
 
     // MARK: - Init
 
@@ -70,6 +73,8 @@ final class SecondView: UIView {
         activateCurrentConstraints()
     }
 }
+
+// MARK: - Установка constraint-ов для элементов
 
 private extension SecondView {
     func setupElements() {
@@ -133,11 +138,15 @@ private extension SecondView {
     }
 
     func activateCurrentConstraints() {
+        guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass ||
+                traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass else { return }
+
         NSLayoutConstraint.deactivate(self.verticalConstraints + self.horizontalConstraints)
         if self.traitCollection.verticalSizeClass == .regular {
             NSLayoutConstraint.activate(self.verticalConstraints)
         } else {
             NSLayoutConstraint.activate(self.horizontalConstraints)
         }
+        previousTraitCollection = traitCollection
     }
 }
