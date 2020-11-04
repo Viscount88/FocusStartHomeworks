@@ -82,7 +82,6 @@ private extension CustomTableViewCell {
     func setupTimeLabel() {
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         timeLabel.font = Fonts.textFont
-        timeLabel.numberOfLines = Constants.labelsNumberOfLines
         timeLabelWidth = timeLabel.widthAnchor.constraint(equalToConstant: Constants.notEmptyTimeLabelWidth)
     }
 
