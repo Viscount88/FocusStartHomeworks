@@ -13,27 +13,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let winScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: winScene)
-//
-//        let tabBarController = TabBarController()
-//
-//        let firstController = FirstViewController()
-//        let firstControllerBarItem = UITabBarItem(title: "Первый экран", image: UIImage(systemName: "01.circle"), selectedImage: UIImage(systemName: "01.circle.fill"))
-//        firstController.tabBarItem = firstControllerBarItem
-//
-//        let secondController = SecondViewController()
-//        let secondControllerBarItem = UITabBarItem(title: "Второй экран", image: UIImage(systemName: "02.circle"), selectedImage: UIImage(systemName: "02.circle.fill"))
-//        secondController.tabBarItem = secondControllerBarItem
-//
-//        let thirdController = ThirdViewController()
-//        let thirdControllerBarItem = UITabBarItem(title: "Третий экран", image: UIImage(systemName: "03.circle"), selectedImage: UIImage(systemName: "03.circle.fill"))
-//        thirdController.tabBarItem = thirdControllerBarItem
+        self.window = UIWindow(windowScene: winScene)
 
-//        tabBarController.viewControllers = [firstController, secondController,thirdController]
-        window?.rootViewController = ViewController()
+        let masterController = MasterViewController()
+        let navMasterController = UINavigationController(rootViewController: masterController)
+
+        let detailController = DetailViewController()
+        let navigationDetailController = UINavigationController(rootViewController: detailController)
+
+        let splitViewController = UISplitViewController()
+        splitViewController.viewControllers = [navMasterController, navigationDetailController]
+        splitViewController.preferredDisplayMode = .oneBesideSecondary
+        splitViewController.delegate = self
+
+        window?.rootViewController = splitViewController
         window?.makeKeyAndVisible()
-
-
     }
 }
 
+extension SceneDelegate: UISplitViewControllerDelegate {
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
+            return true
+    }
+}
