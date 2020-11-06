@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailView: UIView {
+final class DetailView: UIView {
 
     // MARK: - Images
 
@@ -204,6 +204,7 @@ private extension DetailView {
             firstImageView.image = UIImage()
             secondImageView.image = UIImage()
         }
+
         self.textLabel.text = labelText
     }
 }

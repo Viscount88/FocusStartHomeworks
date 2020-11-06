@@ -7,11 +7,11 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+final class DetailViewController: UIViewController {
 
     var navigationTitle = "Deatail"
     var chosenIndexPath:IndexPath?
-    var titleText = "Текст для Label-а"
+    var titleText = "Текст Label-а"
 
     override func loadView() {
         self.view = DetailView(frame: .zero,labelText: titleText, withTableViewIndexPath: chosenIndexPath ?? IndexPath(row: 0, section: 0))

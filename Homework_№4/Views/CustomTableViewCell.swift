@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomTableViewCell: UITableViewCell {
+final class CustomTableViewCell: UITableViewCell {
 
     // MARK: - Fonts
 
@@ -26,7 +26,9 @@ class CustomTableViewCell: UITableViewCell {
     }
 
     // MARK: - Properties
-
+    static var reuseIdentifier: String {
+        return String(describing: CustomTableViewCell.self)
+    }
     let headingLabel = UILabel()
     let myTextLabel = UILabel()
     let timeLabel = UILabel()
