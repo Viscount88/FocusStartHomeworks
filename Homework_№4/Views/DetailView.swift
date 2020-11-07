@@ -11,7 +11,7 @@ final class DetailView: UIView {
 
     // MARK: - Images
 
-    enum Image: Int {
+    private enum Images: Int {
         case firstImage = 0
         case secondImage = 1
         case thirdImage = 2
@@ -204,8 +204,8 @@ private extension DetailView {
     }
 
     func dataForView(withIndexPath indexPath:IndexPath,labelText:String) {
-        firstImageView.image = Image.init(rawValue: indexPath.row)?.image
-        secondImageView.image = Image.init(rawValue: indexPath.row + 1)?.image
+        firstImageView.image = Images.init(rawValue: indexPath.row)?.image
+        secondImageView.image = Images.init(rawValue: indexPath.row + 1)?.image
 
         self.textLabel.text = labelText
     }
