@@ -14,8 +14,8 @@ final class MasterViewController: UIViewController {
 
     override func loadView() {
         masterView.tableViewCellTappedDelegate = self
-        self.view = masterView
-        self.navigationController?.title = "ДЗ 4"
+        view = masterView
+        navigationController?.title = "ДЗ 4"
     }
 
     override func viewDidAppear(_ animated: Bool) {

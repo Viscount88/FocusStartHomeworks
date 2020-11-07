@@ -14,7 +14,7 @@ final class DetailViewController: UIViewController {
     var titleText = "Текст Label-а"
 
     override func loadView() {
-        self.view = DetailView(frame: .zero,labelText: titleText, withTableViewIndexPath: chosenIndexPath ?? IndexPath(row: 0, section: 0))
-        self.navigationItem.title = navigationTitle
+        view = DetailView(frame: .zero,labelText: titleText, withTableViewIndexPath: chosenIndexPath ?? IndexPath(row: 0, section: 0))
+        navigationItem.title = navigationTitle
     }
 }

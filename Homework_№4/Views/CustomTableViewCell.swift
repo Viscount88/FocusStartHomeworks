@@ -65,7 +65,6 @@ private extension CustomTableViewCell {
         setupHeadingLabel()
         setupMyTextLabel()
         setupTimeLabel()
-        addElementsToContentView()
         setupConstraints()
     }
 
@@ -73,23 +72,20 @@ private extension CustomTableViewCell {
         headingLabel.translatesAutoresizingMaskIntoConstraints = false
         headingLabel.font = Fonts.headingFont
         headingLabel.numberOfLines = Constants.labelsNumberOfLines
+        contentView.addSubview(headingLabel)
     }
 
     func setupMyTextLabel() {
         myTextLabel.translatesAutoresizingMaskIntoConstraints = false
         myTextLabel.font = Fonts.textFont
         myTextLabel.numberOfLines = Constants.labelsNumberOfLines
+        contentView.addSubview(myTextLabel)
     }
 
     func setupTimeLabel() {
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         timeLabel.font = Fonts.textFont
         timeLabelWidth = timeLabel.widthAnchor.constraint(equalToConstant: Constants.notEmptyTimeLabelWidth)
-    }
-
-    func addElementsToContentView() {
-        contentView.addSubview(headingLabel)
-        contentView.addSubview(myTextLabel)
         contentView.addSubview(timeLabel)
     }
 

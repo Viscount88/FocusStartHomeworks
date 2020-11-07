@@ -17,7 +17,7 @@ final class CustomTableViewDataSource: NSObject {
 extension CustomTableViewDataSource: UITableViewDataSource{
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataArray.count
+        dataArray.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -25,8 +25,14 @@ extension CustomTableViewDataSource: UITableViewDataSource{
                                                        for: indexPath) as? CustomTableViewCell
         else { assertionFailure(); return UITableViewCell()}
 
-        let object = dataArray[indexPath.row]
-        cell.setupCell(heading: object.heading, text: object.text, time: object.time)
+        if indexPath.row < dataArray.count {
+// Возможно странно, но какая-никакая проверка есть
+// И не понимаю как он может выйти за границы массива, если метод
+// tableView nuberOfRowsInSection возвращает dataArray.count.
+// Возможно, что он все же как-то попытается обратиться к элементу dataArray.count + 1?
+            let object = dataArray[indexPath.row]
+            cell.setupCell(heading: object.heading, text: object.text, time: object.time)
+        }
         return cell
     }
 }

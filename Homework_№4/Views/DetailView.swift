@@ -11,13 +11,33 @@ final class DetailView: UIView {
 
     // MARK: - Images
 
-    private enum Images {
-        static let firstImage = UIImage(named: "firstImage")
-        static let secondImage = UIImage(named: "secondImage")
-        static let thirdImage = UIImage(named: "thirdImage")
-        static let fourthImage = UIImage(named: "fourthImage")
-    }
+    enum Image: Int {
+        case firstImage = 0
+        case secondImage = 1
+        case thirdImage = 2
+        case fourthImage = 3
+        case fifthImage = 4
+        case sixthImage = 5
 
+        var image: UIImage {
+            switch self {
+            case  .firstImage:
+                return UIImage(named: "firstImage") ?? UIImage()
+            case  .secondImage:
+                return UIImage(named: "secondImage") ?? UIImage()
+            case  .thirdImage:
+                return UIImage(named: "thirdImage") ?? UIImage()
+            case  .fourthImage:
+                return UIImage(named: "fourthImage") ?? UIImage()
+            case  .fifthImage:
+                return UIImage(named: "fifthImage") ?? UIImage()
+            case  .sixthImage:
+                return UIImage(named: "sixthImage") ?? UIImage()
+            default:
+                return UIImage()
+            }
+        }
+    }
     // MARK: - Constants
 
     private enum Constants {
@@ -184,26 +204,8 @@ private extension DetailView {
     }
 
     func dataForView(withIndexPath indexPath:IndexPath,labelText:String) {
-        switch indexPath {
-        case IndexPath(row: 0, section: 0):
-            firstImageView.image = Images.firstImage
-            secondImageView.image = Images.thirdImage
-        case IndexPath(row: 1, section: 0):
-            firstImageView.image = Images.secondImage
-            secondImageView.image = Images.firstImage
-        case IndexPath(row: 2, section: 0):
-            firstImageView.image = Images.thirdImage
-            secondImageView.image = Images.fourthImage
-        case IndexPath(row: 3, section: 0):
-            firstImageView.image = Images.firstImage
-            secondImageView.image = Images.fourthImage
-        case IndexPath(row: 4, section: 0):
-            firstImageView.image = Images.thirdImage
-            secondImageView.image = Images.secondImage
-        default:
-            firstImageView.image = UIImage()
-            secondImageView.image = UIImage()
-        }
+        firstImageView.image = Image.init(rawValue: indexPath.row)?.image
+        secondImageView.image = Image.init(rawValue: indexPath.row + 1)?.image
 
         self.textLabel.text = labelText
     }
