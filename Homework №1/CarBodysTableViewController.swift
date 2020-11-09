@@ -9,7 +9,7 @@ import UIKit
 
 class CarBodysTableViewController: UITableViewController {
 
-    fileprivate enum Constants {
+    private enum Constants {
         static let tableViewCellID = "CarBodysTableVIewCellID"
     }
 
@@ -20,25 +20,27 @@ class CarBodysTableViewController: UITableViewController {
         super.viewDidLoad()
 
         for bodyTypeCase in Body.allCases {
-            carBodyTypes.append(bodyTypeCase.rawValue)
+            self.carBodyTypes.append(bodyTypeCase.rawValue)
         }
     }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return carBodyTypes.count
+        return self.carBodyTypes.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.tableViewCellID)
-        cell?.textLabel?.text = carBodyTypes[indexPath.row]
-        return cell!
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.tableViewCellID) else {
+            fatalError("Can't dequeue cell with reuse identifier \(Constants.tableViewCellID)")
+        }
+        cell.textLabel?.text = self.carBodyTypes[indexPath.row]
+        return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let chosenCarBodyDelegate = chosenCarBodyDelegate{
-            chosenCarBodyDelegate.chosenBody(body: carBodyTypes[indexPath.row])
+        if let chosenCarBodyDelegate = self.chosenCarBodyDelegate{
+            chosenCarBodyDelegate.chosenBody(body: self.carBodyTypes[indexPath.row])
         }
         navigationController?.popViewController(animated: true)
     }

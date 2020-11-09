@@ -26,16 +26,16 @@ class CarListViewController: UIViewController {
     var isFilterActive:Bool = false
 
     fileprivate func setupTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
-        carsArray.append(Car(manufacturer: "Mazda", model: "model", body: .cabrio, yearOfIssue: nil, carNumber: "321"))
-        disableFilterButton.isHidden = true
-        filterView.layer.cornerRadius = Constants.filterViewCornerRadius
+        self.setupTableView()
+        self.carsArray.append(Car(manufacturer: "Mazda", model: "model", body: .cabrio, yearOfIssue: nil, carNumber: "321"))
+        self.disableFilterButton.isHidden = true
+        self.filterView.layer.cornerRadius = Constants.filterViewCornerRadius
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -48,11 +48,11 @@ class CarListViewController: UIViewController {
     }
 
     @IBAction func disableFilterAction(_ sender: Any) {
-        isFilterActive = false
+        self.isFilterActive = false
         self.filteredCarsArray = []
         self.tableView.reloadData()
-        filterLabel.text = "Нет активных фильтров"
-        disableFilterButton.isHidden = true
+        self.filterLabel.text = "Нет активных фильтров"
+        self.disableFilterButton.isHidden = true
     }
 }
 
@@ -60,19 +60,19 @@ class CarListViewController: UIViewController {
 extension CarListViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFilterActive {
-            return filteredCarsArray.count
+        if self.isFilterActive {
+            return self.filteredCarsArray.count
         } else {
-            return carsArray.count
+            return self.carsArray.count
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.tableViewCellID) as! OneCarTableViewCell
 
-        if isFilterActive {
-            if !filteredCarsArray.isEmpty{
-                let car = filteredCarsArray[indexPath.row]
+        if self.isFilterActive {
+            if !self.filteredCarsArray.isEmpty{
+                let car = self.filteredCarsArray[indexPath.row]
                 cell.setupCell(manufacturerLabelText: car.manufacturer,
                                modelLabelText: car.model,
                                bodyLabelText: car.body.rawValue,
@@ -80,7 +80,7 @@ extension CarListViewController: UITableViewDelegate, UITableViewDataSource {
                                carNumberLabelText: car.carNumber)
             }
         } else {
-            let car = carsArray[indexPath.row]
+            let car = self.carsArray[indexPath.row]
             cell.setupCell(manufacturerLabelText: car.manufacturer,
                            modelLabelText: car.model,
                            bodyLabelText: car.body.rawValue,
@@ -99,7 +99,7 @@ extension CarListViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - SaveCarDelegate
 extension CarListViewController: SaveCarDelegate {
     func saveCar(_ car: Car){
-        carsArray.append(car)
+        self.carsArray.append(car)
         self.tableView.reloadData()
     }
 }
@@ -107,10 +107,10 @@ extension CarListViewController: SaveCarDelegate {
 // MARK: - ChosenCarBodyDelegate
 extension CarListViewController: ChosenCarBodyDelegate {
     func chosenBody(body: String) {
-        isFilterActive = true
+        self.isFilterActive = true
         self.filteredCarsArray = self.carsArray.filter { $0.body.rawValue == body }
         self.tableView.reloadData()
-        disableFilterButton.isHidden = false
-        filterLabel.text = "Активный фильтр по кузову:\n\(body)"
+        self.disableFilterButton.isHidden = false
+        self.filterLabel.text = "Активный фильтр по кузову:\n\(body)"
     }
 }

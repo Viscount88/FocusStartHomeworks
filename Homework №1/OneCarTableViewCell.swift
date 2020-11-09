@@ -20,18 +20,18 @@ class OneCarTableViewCell: UITableViewCell {
                    bodyLabelText:String,
                    yearOfIssueLabelText:Int?,
                    carNumberLabelText:String?) {
-        manufacturerLabel.text = "Производитель: \(manufacturerLabelText)"
-        modelLabel.text = "Модель: \(modelLabelText)"
-        bodyLabel.text = "Тип кузова: \(bodyLabelText)"
+        self.manufacturerLabel.text = "Производитель: \(manufacturerLabelText)"
+        self.modelLabel.text = "Модель: \(modelLabelText)"
+        self.bodyLabel.text = "Тип кузова: \(bodyLabelText)"
         if let yearOfIssueLabelText = yearOfIssueLabelText {
-            yearOfIssueLabel.text = "Год выпуска: \(yearOfIssueLabelText)"
+            self.yearOfIssueLabel.text = "Год выпуска: \(yearOfIssueLabelText)"
         } else {
-            yearOfIssueLabel.text = "Год выпуска: -"
+            self.yearOfIssueLabel.text = "Год выпуска: -"
         }
         if let carNumberLabelText = carNumberLabelText {
-            carNumberLabel.text = "Гос номер: \(carNumberLabelText)"
+            self.carNumberLabel.text = "Гос номер: \(carNumberLabelText)"
         } else {
-            carNumberLabel.text = ""
+            self.carNumberLabel.text = ""
         }
     }
 }

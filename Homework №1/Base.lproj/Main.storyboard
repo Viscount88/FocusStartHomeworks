@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zqz-nZ-xeM">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,7 +11,7 @@
         <!--Список машин-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Homework__1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="CarListViewController" customModule="Homework__1" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -128,12 +128,12 @@
                     <navigationItem key="navigationItem" title="Список машин" largeTitleDisplayMode="always" id="rVs-av-B9f">
                         <barButtonItem key="leftBarButtonItem" title="Фильтр" id="9S9-Pv-Ewx">
                             <connections>
-                                <segue destination="33V-vm-jaH" kind="show" identifier="filterCarBodySegueID" id="vdX-NI-pvL"/>
+                                <segue destination="33V-vm-jaH" kind="show" identifier="FilterCarBodySegueID" id="vdX-NI-pvL"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="LYT-x5-Qfz">
                             <connections>
-                                <segue destination="rB6-Vw-ziJ" kind="show" identifier="addCarSegueID" id="uqt-o4-YXe"/>
+                                <segue destination="rB6-Vw-ziJ" kind="show" identifier="AddCarSegueID" id="uqt-o4-YXe"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -192,7 +192,7 @@
                                     <color key="titleColor" systemColor="secondarySystemBackgroundColor"/>
                                 </state>
                                 <connections>
-                                    <segue destination="33V-vm-jaH" kind="show" identifier="chooseCarBody" id="OOU-KG-NoZ"/>
+                                    <segue destination="33V-vm-jaH" kind="show" identifier="ChooseCarBody" id="OOU-KG-NoZ"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Год выпуска" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CnH-R4-w47">
@@ -322,7 +322,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="vdX-NI-pvL"/>
+        <segue reference="OOU-KG-NoZ"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="xmark.circle" catalog="system" width="128" height="121"/>

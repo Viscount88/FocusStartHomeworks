@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		CE066BEA2538A26500CF23F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE066BE92538A26500CF23F0 /* AppDelegate.swift */; };
 		CE066BEC2538A26500CF23F0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE066BEB2538A26500CF23F0 /* SceneDelegate.swift */; };
-		CE066BEE2538A26500CF23F0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE066BED2538A26500CF23F0 /* ViewController.swift */; };
+		CE066BEE2538A26500CF23F0 /* CarListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE066BED2538A26500CF23F0 /* CarListViewController.swift */; };
 		CE066BF12538A26500CF23F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE066BEF2538A26500CF23F0 /* Main.storyboard */; };
 		CE066BF32538A26700CF23F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE066BF22538A26700CF23F0 /* Assets.xcassets */; };
 		CE066BF62538A26700CF23F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE066BF42538A26700CF23F0 /* LaunchScreen.storyboard */; };
@@ -19,13 +19,14 @@
 		CE066C0D2538AF6000CF23F0 /* ChosenCarBodyDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE066C0C2538AF6000CF23F0 /* ChosenCarBodyDelegate.swift */; };
 		CE3B68FC2538B02000249026 /* CarBodysTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B68FB2538B02000249026 /* CarBodysTableViewController.swift */; };
 		CE3B68FF2538B6EC00249026 /* SaveCarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B68FE2538B6EC00249026 /* SaveCarDelegate.swift */; };
+		CED8435425592E87005730E8 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED8435325592E87005730E8 /* Formatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CE066BE62538A26500CF23F0 /* Homework №1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Homework №1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE066BE92538A26500CF23F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE066BEB2538A26500CF23F0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CE066BED2538A26500CF23F0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CE066BED2538A26500CF23F0 /* CarListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarListViewController.swift; sourceTree = "<group>"; };
 		CE066BF02538A26500CF23F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CE066BF22538A26700CF23F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE066BF52538A26700CF23F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -36,6 +37,7 @@
 		CE066C0C2538AF6000CF23F0 /* ChosenCarBodyDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChosenCarBodyDelegate.swift; sourceTree = "<group>"; };
 		CE3B68FB2538B02000249026 /* CarBodysTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarBodysTableViewController.swift; sourceTree = "<group>"; };
 		CE3B68FE2538B6EC00249026 /* SaveCarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveCarDelegate.swift; sourceTree = "<group>"; };
+		CED8435325592E87005730E8 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,7 +72,7 @@
 			children = (
 				CE066BE92538A26500CF23F0 /* AppDelegate.swift */,
 				CE066BEB2538A26500CF23F0 /* SceneDelegate.swift */,
-				CE066BED2538A26500CF23F0 /* ViewController.swift */,
+				CE066BED2538A26500CF23F0 /* CarListViewController.swift */,
 				CE066BFE2538A3F700CF23F0 /* OneCarTableViewCell.swift */,
 				CE066C082538A9B200CF23F0 /* AddingNewCarViewController.swift */,
 				CE3B68FB2538B02000249026 /* CarBodysTableViewController.swift */,
@@ -89,6 +91,7 @@
 				CE066C012538A4DC00CF23F0 /* Car.swift */,
 				CE066C0C2538AF6000CF23F0 /* ChosenCarBodyDelegate.swift */,
 				CE3B68FE2538B6EC00249026 /* SaveCarDelegate.swift */,
+				CED8435325592E87005730E8 /* Formatter.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -165,7 +168,8 @@
 			files = (
 				CE3B68FF2538B6EC00249026 /* SaveCarDelegate.swift in Sources */,
 				CE066C0D2538AF6000CF23F0 /* ChosenCarBodyDelegate.swift in Sources */,
-				CE066BEE2538A26500CF23F0 /* ViewController.swift in Sources */,
+				CED8435425592E87005730E8 /* Formatter.swift in Sources */,
+				CE066BEE2538A26500CF23F0 /* CarListViewController.swift in Sources */,
 				CE066BEA2538A26500CF23F0 /* AppDelegate.swift in Sources */,
 				CE066C022538A4DC00CF23F0 /* Car.swift in Sources */,
 				CE066BEC2538A26500CF23F0 /* SceneDelegate.swift in Sources */,

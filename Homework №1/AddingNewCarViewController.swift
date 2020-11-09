@@ -9,9 +9,9 @@ import UIKit
 
 class AddingNewCarViewController: UIViewController {
 
-    fileprivate enum Constants {
+    private enum Constants {
         static let buttonCornerRadius:CGFloat = 10
-        static let chooseCarBodySegueID = "chooseCarBody"
+        static let chooseCarBodySegueID = "ChooseCarBody"
     }
 
     var saveCarDelegate:SaveCarDelegate?
@@ -21,37 +21,16 @@ class AddingNewCarViewController: UIViewController {
     @IBOutlet var carNumberTextField: UITextField!
     @IBOutlet var carBodyButton: UIButton!
 
-    fileprivate func setupTextFields() {
-        manufacturerTextField.delegate = self
-        modelTextField.delegate = self
-        yearOfIssueTextField.delegate = self
-        carNumberTextField.delegate = self
-    }
-
-    fileprivate func setupKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    fileprivate func setupButtons() {
-        carBodyButton.layer.cornerRadius = Constants.buttonCornerRadius
-    }
-
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
 
-    fileprivate func setupTapToCloseTextField() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tap)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupKeyboardNotifications()
-        setupTextFields()
-        setupButtons()
-        setupTapToCloseTextField()
+        self.setupKeyboardNotifications()
+        self.setupTextFields()
+        self.setupButtons()
+        self.setupTapToCloseTextField()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -62,7 +41,7 @@ class AddingNewCarViewController: UIViewController {
 
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if carNumberTextField.isFirstResponder {
+            if self.carNumberTextField.isFirstResponder {
                 if self.view.frame.origin.y == 0 {
                     self.view.frame.origin.y -= keyboardSize.height/3
                 }
@@ -76,51 +55,8 @@ class AddingNewCarViewController: UIViewController {
         }
     }
 
-    fileprivate func chooseCarBody() {
-        performSegue(withIdentifier: Constants.chooseCarBodySegueID, sender: self)
-    }
-
-    fileprivate func textFieldIsnotFilled(withMessage message:String) {
-        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "Ок", style: .default, handler: nil)
-        alert.addAction(alertAction)
-        present(alert, animated: true, completion: nil)
-    }
-
-    fileprivate func saveCar() {
-        guard let manufacturer = manufacturerTextField.text, manufacturer != "" else {
-            textFieldIsnotFilled(withMessage: "Вы не заполнили поле производитель")
-            return
-        }
-        guard let model = modelTextField.text, model != "" else {
-            textFieldIsnotFilled(withMessage: "Вы не заполнили поле модель")
-            return
-        }
-        guard let bodyText = carBodyButton.title(for: .normal),
-              bodyText != "Выбрать",
-              let body = Body(rawValue: bodyText) else {
-            textFieldIsnotFilled(withMessage: "Вы не выбрали тип кузова")
-            return
-        }
-
-        var yearOfIssue:Int?
-        if let yearOfIssueText = yearOfIssueTextField.text {
-            yearOfIssue = Int(yearOfIssueText)
-        } else {
-            yearOfIssue = nil
-        }
-
-        let carNumber = carNumberTextField.text == "" ? nil : carNumberTextField.text
-        saveCarDelegate?.saveCar(Car(manufacturer: manufacturer,
-                                     model: model,
-                                     body: body,
-                                     yearOfIssue: yearOfIssue,
-                                     carNumber: carNumber))
-        navigationController?.popViewController(animated: true)
-    }
-
     @IBAction func saveAction(_ sender: Any) {
-        saveCar()
+        self.saveCar()
     }
 }
 
@@ -131,13 +67,13 @@ extension AddingNewCarViewController: UITextFieldDelegate {
 
         textField.resignFirstResponder()
         if textField == manufacturerTextField {
-            modelTextField.becomeFirstResponder()
+            self.modelTextField.becomeFirstResponder()
         } else if textField == modelTextField {
-            chooseCarBody()
+            self.chooseCarBody()
         } else if textField == yearOfIssueTextField {
-            carNumberTextField.becomeFirstResponder()
+            self.carNumberTextField.becomeFirstResponder()
         } else if textField == carNumberTextField {
-            saveCar()
+            self.saveCar()
         }
 
         return true
@@ -145,10 +81,8 @@ extension AddingNewCarViewController: UITextFieldDelegate {
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
-        if textField == yearOfIssueTextField {
-            let allowedCharacters = CharacterSet(charactersIn:"0123456789")
-            let characterSet = CharacterSet(charactersIn: string)
-            return allowedCharacters.isSuperset(of: characterSet)
+        if textField == self.yearOfIssueTextField {
+            return Formatter.allowCharaters("0123456789", inString: string)
         }
         return true
     }
@@ -157,7 +91,72 @@ extension AddingNewCarViewController: UITextFieldDelegate {
 // MARK: - ChosenCarBodyDelegate
 extension AddingNewCarViewController: ChosenCarBodyDelegate {
     func chosenBody(body: String) {
-        carBodyButton.setTitle(body, for: .normal)
-        yearOfIssueTextField.becomeFirstResponder()
+        self.carBodyButton.setTitle(body, for: .normal)
+        self.yearOfIssueTextField.becomeFirstResponder()
+    }
+}
+
+
+private extension AddingNewCarViewController {
+    func setupTextFields() {
+        self.manufacturerTextField.delegate = self
+        self.modelTextField.delegate = self
+        self.yearOfIssueTextField.delegate = self
+        self.carNumberTextField.delegate = self
+    }
+
+    func setupKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    func setupButtons() {
+        self.carBodyButton.layer.cornerRadius = Constants.buttonCornerRadius
+    }
+
+    func setupTapToCloseTextField() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+
+    func chooseCarBody() {
+        performSegue(withIdentifier: Constants.chooseCarBodySegueID, sender: self)
+    }
+
+    func textFieldIsnotFilled(withMessage message:String) {
+        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Ок", style: .default, handler: nil)
+        alert.addAction(alertAction)
+        present(alert, animated: true, completion: nil)
+    }
+
+    func saveCar() {
+        guard let manufacturer = self.manufacturerTextField.text, !manufacturer.isEmpty else {
+            self.textFieldIsnotFilled(withMessage: "Вы не заполнили поле производитель")
+            return
+        }
+        guard let model = self.modelTextField.text, model != "" else {
+            self.textFieldIsnotFilled(withMessage: "Вы не заполнили поле модель")
+            return
+        }
+        guard let bodyText = self.carBodyButton.title(for: .normal),
+              bodyText != "Выбрать",
+              let body = Body(rawValue: bodyText) else {
+            self.textFieldIsnotFilled(withMessage: "Вы не выбрали тип кузова")
+            return
+        }
+
+        var yearOfIssue:Int?
+        if let yearOfIssueText = self.yearOfIssueTextField.text {
+            yearOfIssue = Int(yearOfIssueText)
+        }
+
+        let carNumber = self.carNumberTextField.text == "" ? nil : self.carNumberTextField.text
+        saveCarDelegate?.saveCar(Car(manufacturer: manufacturer,
+                                     model: model,
+                                     body: body,
+                                     yearOfIssue: yearOfIssue,
+                                     carNumber: carNumber))
+        navigationController?.popViewController(animated: true)
     }
 }
